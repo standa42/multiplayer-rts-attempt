@@ -242,28 +242,39 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
     <Compile Include="Assets\GPGSIds.cs" />
+    <Compile Include="Assets\Scripts\Common\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Common\CommonRandom.cs" />
+    <Compile Include="Assets\Scripts\Common\GridMesh.cs" />
     <Compile Include="Assets\Scripts\Common\Log.cs" />
     <Compile Include="Assets\Scripts\Common\LogTextInitializer.cs" />
-    <Compile Include="Assets\Scripts\Game\Commands\GameCommandsHolder.cs" />
     <Compile Include="Assets\Scripts\Game\Commands\InputCommandAutomata.cs" />
     <Compile Include="Assets\Scripts\Game\Controls\TouchConfig.cs" />
     <Compile Include="Assets\Scripts\Game\Controls\TouchInput.cs" />
     <Compile Include="Assets\Scripts\Game\Entities\Building.cs" />
-    <Compile Include="Assets\Scripts\Game\Entities\Map.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
     <Compile Include="Assets\Scripts\Game\Initialization\Initializer.cs" />
     <Compile Include="Assets\Scripts\Game\Initialization\MatchCreator.cs" />
+    <Compile Include="Assets\Scripts\Game\Managers\CommandsHolder.cs" />
     <Compile Include="Assets\Scripts\Game\Managers\Simulation.cs" />
+    <Compile Include="Assets\Scripts\Game\Managers\SimulationConfig.cs" />
+    <Compile Include="Assets\Scripts\Game\Map.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\INetworkCreator.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\INetworkStarter.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\NetworkCommunication.cs" />
+    <Compile Include="Assets\Scripts\Game\NetworkConnection\NetworkCommunicationMock.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\NetworkCommunicationTest.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\ProtoBuffCommandReceiver.cs" />
     <Compile Include="Assets\Scripts\Game\NetworkConnection\ProtoBuffCommandSender.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayerProxies\LocalPlayerProxy.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayerProxies\MultiplayerPlayerProxy.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayerProxies\PlayerProxies.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayerProxies\PlayerProxy.cs" />
     <Compile Include="Assets\Scripts\Game\Races\Races.cs" />
     <Compile Include="Assets\Scripts\Menu\IntersceneData.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuControl.cs" />
     <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
+    <None Include="Assets\Resources\Map\Maps\TestingTwo1.txt" />
+    <None Include="Assets\Resources\Map\Maps\TestingFour1.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -458,9 +469,6 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Programy/Unity2018/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="Necooo">
-      <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Assets/Plugins/N/Necooo.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Assets/Plugins/Proto/protobuf-net.dll</HintPath>

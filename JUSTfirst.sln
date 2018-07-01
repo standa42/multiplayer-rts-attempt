@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{C1144420-D46F-710C-7671-EB99EC8F390B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JUSTfirst", "Assembly-CSharp.csproj", "{C1144420-D46F-710C-7671-EB99EC8F390B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{24D08A21-3B98-C363-98C9-76BD4A0BE11F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JUSTfirst", "Assembly-CSharp-Editor.csproj", "{24D08A21-3B98-C363-98C9-76BD4A0BE11F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkObjects", "ProtobufInterface\NetworkObjects.csproj", "{AFFCA053-0432-4D38-AC99-08C5A229A0D2}"
 EndProject
@@ -30,8 +28,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {724AB028-64D6-454D-AF73-A5ED3DE22598}
 	EndGlobalSection
 EndGlobal

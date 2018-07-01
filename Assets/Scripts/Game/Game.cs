@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkObjects;
+using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game
 {
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Game
         {
         }
 
-        public void ApplyCommands()
+        public void ApplyCommands(List<Command> commands)
         {
 
         }

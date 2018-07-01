@@ -805,17 +805,17 @@ Prefab:
     - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
         type: 2}
       propertyPath: m_FontData.m_MinSize
-      value: 35
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
         type: 2}
       propertyPath: m_FontData.m_FontSize
-      value: 35
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
         type: 2}
       propertyPath: m_FontData.m_MaxSize
-      value: 35
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1926142359850436, guid: e7e8cc38580fd3248abf418d8baf9350, type: 2}
       propertyPath: m_IsActive
@@ -1738,7 +1738,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1241021355}
   m_OnClick:
     m_PersistentCalls:

@@ -8,6 +8,7 @@ using Assets.Scripts.Game.Entities;
 using Assets.Scripts.Game.Races;
 using NetworkingWrapper;
 using NetworkObjects;
+using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.NetworkConnection
 {
@@ -18,12 +19,14 @@ namespace Assets.Scripts.Game.NetworkConnection
         public event RandomSeedReceivedDelegate RandomSeedReceived;
         public event StartCommandReceivedDelegate StartCommandReceived;
         public event ReadyCommandReceivedDelegate ReadyCommandReceived;
+        public event IncomingCommandsDelegate CommandsReceived;
 
         public delegate void RaceReceivedDelegate(byte raceId, int playerId);
         public delegate void MapReceivedDelegate(byte mapId);
         public delegate void RandomSeedReceivedDelegate(int seed);
         public delegate void StartCommandReceivedDelegate();
         public delegate void ReadyCommandReceivedDelegate();
+        public delegate void IncomingCommandsDelegate(int playerId, List<Command> commands);
 
 
 
@@ -38,6 +41,8 @@ namespace Assets.Scripts.Game.NetworkConnection
 
             foreach (var packet in listOfPackets.AsEnumerable().Reverse())
             {
+                Log.LogMessage("Packet received");
+                Log.LogMessage($"packet is typable to commandsPacket: {packet is CommandsPacket}");
                 dynamic dPacket = packet;
                 InvokeIncomingPacket(playerId, dPacket);
             }
@@ -71,6 +76,12 @@ namespace Assets.Scripts.Game.NetworkConnection
         {
             Log.LogMessage("RacePacket");
             RaceReceived(rp.RaceId, playerId);
+        }
+
+        private void InvokeIncomingPacket(int playerId, CommandsPacket cp)
+        {
+            Log.LogMessage("CommandsPacket");
+            CommandsReceived(playerId, cp.Commands);
         }
     }
 }

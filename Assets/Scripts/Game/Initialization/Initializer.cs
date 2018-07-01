@@ -1,10 +1,13 @@
-﻿using System;
+﻿#define IS_ANDROID
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
+using Assets.Scripts.Game.Managers;
 using Assets.Scripts.Game.Races;
 using Assets.Scripts.Menu;
 using Assets.Scripts.Game.NetworkConnection;
@@ -14,6 +17,8 @@ namespace Assets.Scripts.Game.Initialization
 {
     public class Initializer : MonoBehaviour
     {
+        public TouchInput touchInput;
+
         public delegate void NetworkCreationVariablesDelegate(List<Tuple<int, byte>> playerRaces, int mapId, int randomSeed);
         public delegate void NetworkStartGameDelegate();
 
@@ -29,7 +34,26 @@ namespace Assets.Scripts.Game.Initialization
 
         void Start()
         {
+#if !IS_ANDROID
+            myId = 0;
+            networkCommunication = new NetworkCommunicationMock((uint)IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            EditorInitialization();
+#endif
+
+#if IS_ANDROID
             StartInitilization();
+#endif
+        }
+
+        private void EditorInitialization()
+        {
+            myId = 0;
+
+            this.mapId = 0;
+            this.randomSeed = 42;
+            this.playerRaces = new List<Tuple<int, byte>>() { new Tuple<int, byte>(0, 0) };
+
+            SceneCreationEditor();
         }
 
         private void StartInitilization()
@@ -93,8 +117,9 @@ namespace Assets.Scripts.Game.Initialization
         private void CreateScene()
         {
             Log.LogMessage("Scene creation started");
-            // TODO scene creation
 
+
+            SceneCreationAndroid();
 
 
             AttempToStart();
@@ -111,7 +136,77 @@ namespace Assets.Scripts.Game.Initialization
         {
             // todo fade in to the scene
             Log.LogMessage("Fading in the scene");
+
+
         }
+
+
+
+
+        private Simulation simulation = null;
+        private bool debugMarker = false;
+
+        private void SceneCreationAndroid()
+        {
+            Log.LogMessage("Scene creation start");
+            CommonRandom.RandomGenerator = new System.Random(randomSeed);
+            MapFactory.Map map;
+            if (IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame == NumberOfPlayersInGame.Two)
+            {
+                map = MapFactory.LoadMapFromFile("TestingTwo1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            }
+            else
+            {
+                map = MapFactory.LoadMapFromFile("TestingFour1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            }
+            var cameraMovement = new CameraControl(touchInput);
+
+            var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
+                IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var inputAutomata = new InputCommandAutomata(playerProxies);
+            var game = new Game();
+            this.simulation = new Simulation(commandsHolder, inputAutomata, game);
+
+            simulation.Run();
+            Log.LogMessage("Scene creation end");
+            
+        }
+
+        private void SceneCreationEditor()
+        {
+            Log.LogMessage("Scene creation start");
+            CommonRandom.RandomGenerator = new System.Random(randomSeed);
+            var map = MapFactory.LoadMapFromFile("TestingTwo1", NumberOfPlayersInGame.Two);
+            var cameraMovement = new CameraControl(touchInput);
+
+            var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
+                IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var inputAutomata = new InputCommandAutomataMock(playerProxies);
+            var game = new Game();
+            this.simulation = new Simulation(commandsHolder, inputAutomata, game);
+
+            simulation.Run();
+            Log.LogMessage("Scene creation end");
+        }
+
+        void Update()
+        {
+            try
+            {
+                simulation?.Update();
+            }
+            catch (Exception e)
+            {
+                //Log.LogMessage($"SimException: {e.Message} {Environment.NewLine} {e.StackTrace}");
+                throw;
+            }
+            
+        }
+
+
+
 
     }
 }

@@ -8,13 +8,14 @@ using Assets.Scripts.Common;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.Multiplayer;
 using NetworkObjects;
+using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.NetworkConnection
 {
     public class NetworkCommunication : RealTimeMultiplayerListener
     {
-        public ProtoBuffCommandReceiver Receiver { get; }
-        private ProtoBuffCommandSender sender { get; }
+        public ProtoBuffCommandReceiver Receiver { get; set; }
+        public ProtoBuffCommandSender Sender { get; set; }
 
         private uint gameVariant;
         private uint opponentsCount;
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Game.NetworkConnection
             gameVariant = 42 + opponents;
 
             Receiver = new ProtoBuffCommandReceiver(this);
-            sender = new ProtoBuffCommandSender();
+            Sender = new ProtoBuffCommandSender();
         }
 
         #region Input functions
@@ -45,9 +46,27 @@ namespace Assets.Scripts.Game.NetworkConnection
             PlayGamesPlatform.Instance.RealTime.CreateQuickGame(opponentsCount, opponentsCount, gameVariant, this);
         }
 
-        public void SendMessages(List<Packet> packetList)
+        public virtual void SendCommands(List<Command> commands)
         {
-            PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, sender.WrapCommandMessages(packetList));
+            Log.LogMessage("Sending Commands!");
+            this.SendMessages(new List<Packet>()
+            {
+                new CommandsPacket {Commands = commands}
+            });
+        }
+
+        public virtual void SendMessages(List<Packet> packetList)
+        {
+            try
+            {
+                PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, Sender.WrapCommandMessages(packetList));
+            }
+            catch (Exception e)
+            {
+                Log.LogMessage($"Exception while sending msg {e.Message}");
+                throw;
+            }
+            
         }
 
         public void LeaveRoom()
@@ -160,7 +179,7 @@ namespace Assets.Scripts.Game.NetworkConnection
             idsConverter = new IdsConverter(googleIdToMyIdDictionary, myIdToGoogleIdDictionary);
         }
 
-        private class IdsConverter
+        internal class IdsConverter
         {
             private Dictionary<string, int> googleIdToMyIdDictionary;
             private Dictionary<int, string> myIdToGoogleIdDictionary;

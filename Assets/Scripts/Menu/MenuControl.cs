@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#define IS_ANDROID
+
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.Game.Races;
@@ -79,6 +81,7 @@ public class MenuControl : MonoBehaviour
 
     public void PlayClick()
     {
+#if IS_ANDROID
         bool isSignedIn = PlayGamesPlatform.Instance.localUser.authenticated;
 
         if (isSignedIn)
@@ -91,6 +94,11 @@ public class MenuControl : MonoBehaviour
             Log.LogMessage("Not signed -> goto signing");
             TransitionFromPlayToSignIn();
         }
+#endif
+
+#if !IS_ANDROID
+        TransitionFromPlayToNumberOfPlayers();
+#endif
     }
 
     public void SignInClick()

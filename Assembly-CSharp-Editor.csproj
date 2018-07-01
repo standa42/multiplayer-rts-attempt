@@ -331,9 +331,6 @@
     <Reference Include="Google.VersionHandlerImpl_v1.2.61.0">
       <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.61.0.dll</HintPath>
     </Reference>
-    <Reference Include="Necooo">
-      <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Assets/Plugins/N/Necooo.dll</HintPath>
-    </Reference>
     <Reference Include="protobuf-net">
       <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Assets/Plugins/Proto/protobuf-net.dll</HintPath>
     </Reference>

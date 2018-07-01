@@ -30,7 +30,7 @@ namespace Assets.Scripts.Common
         }
 
         private static Queue<string> messageList;
-        private static int keptMessagesCount = 25;
+        private static int keptMessagesCount = 40;
 
         static Log()
         {

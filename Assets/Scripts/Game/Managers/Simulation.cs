@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
+using NetworkObjects.Commands;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Managers
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Game.Managers
     {
         // in seconds
         private readonly double commandsUpdateTimestep = 0.2f; 
-        private readonly double simulationUpdateTimestep = 0.01f;
+        private readonly double simulationUpdateTimestep = 0.05f;
 
         public bool IsRunning { get; set; } = false;
 
@@ -23,18 +24,24 @@ namespace Assets.Scripts.Game.Managers
         private double simulationUpdateWatch = 0;
         private int simulationInControlCounter = 0;
 
+        private int commandsRoundCounter = 0; 
+
         // TODO not initialized
         private Game game;
-        private GameCommandsHolder commandsHolder;
         private InputCommandAutomata inputAutomata;
+        private CommandsHolder commandsHolder;
 
-        public Simulation()
+        public Simulation(CommandsHolder commandsHolder, InputCommandAutomata inputAutomata, Game game)
         {
             howManyTimesSimulateBeforeControlUpdate = (int)Math.Floor(commandsUpdateTimestep / simulationUpdateTimestep);
+            this.commandsHolder = commandsHolder;
+            this.inputAutomata = inputAutomata;
+            this.game = game;
         }
 
         public void Run()
         {
+            Log.LogMessage("Simulation set to running");
             IsRunning = true;
         }
 
@@ -43,7 +50,7 @@ namespace Assets.Scripts.Game.Managers
             IsRunning = false;
         }
 
-        void Update()
+        public void Update()
         {
             if (IsRunning)
             {
@@ -61,31 +68,35 @@ namespace Assets.Scripts.Game.Managers
                     simulationInControlCounter++;
                 }
 
+                List<Command> commands;
+
                 if (
                     commandsUpdateWatch > commandsUpdateTimestep &&
                     simulationInControlCounter == howManyTimesSimulateBeforeControlUpdate &&
-                    commandsHolder.AreCommandsForNexRoundAvailable()
+                    commandsHolder.TryGetCommandsForRound(commandsRoundCounter, out commands)
                     )
                 {
-                    SetCommands();
+                    Log.LogMessage($"Command round: {commandsRoundCounter}");
+                    SetCommands(commands);
 
                     commandsUpdateWatch -= commandsUpdateTimestep;
                     simulationInControlCounter = 0;
+                    commandsRoundCounter++;
                 }
             }
         }
 
         private void Simulate()
         {
-            Log.LogMessage("Simulation tick");
+            //Log.LogMessage("Simulation tick");
             game.Simulate();
         }
 
-        private void SetCommands()
+        private void SetCommands(List<Command> commands)
         {
             Log.LogMessage("Commands tick");
-            inputAutomata.SendMyCommandsToOtherPlayers();
-            game.ApplyCommands();
+            inputAutomata.SendMyCommandsToPlayers();
+            game.ApplyCommands(commands);
         }
     }
 }

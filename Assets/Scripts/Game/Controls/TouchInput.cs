@@ -8,6 +8,16 @@ using UnityEngine.EventSystems;
 
 public class TouchInput : MonoBehaviour
 {
+    public event SlideDelegate SlideEvent;
+    public event TapDelegate TapEvent;
+    public event DragDelegate DragEvent;
+    public event DragEndDelegate DragEndEvent;
+
+    public delegate void SlideDelegate(Vector2 vector);
+    public delegate void TapDelegate(Vector2 position);
+    public delegate void DragDelegate(Vector2 begin, Vector2 current);
+    public delegate void DragEndDelegate(Vector2 begin, Vector2 end);
+
     /* variables belonging to the last touch
      * used for detection of gestures regarding
      * multiple begin phases
@@ -197,6 +207,7 @@ public class TouchInput : MonoBehaviour
     private void Slide(Vector2 differenceVector)
     {
         Log.LogMessage("Slide: " + differenceVector);
+        SlideEvent(differenceVector);
     }
 
 }

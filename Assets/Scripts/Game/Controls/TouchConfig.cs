@@ -11,13 +11,13 @@ namespace Assets.Scripts.Controls
     {
         private static readonly double inchInMilimeters = 25.4f;
         private static readonly double dpmm = Screen.dpi / inchInMilimeters;
-        private static float AcceptedDistanceForClickInMilimeters { get; } = 1.7f;
+        private static float AcceptedDistanceForClickInMilimeters { get; } = 1.99f;
         public static float AcceptedDistanceForTapInPixels { get; } = (float)(AcceptedDistanceForClickInMilimeters * dpmm);
 
-        private static float AcceptedDifferenceForDoubleTapInMilimeters { get; } = 12f;
+        private static float AcceptedDifferenceForDoubleTapInMilimeters { get; } = 8f;
         public static float AcceptedDifferenceForDoubleTapInPixels { get; } = (float)(AcceptedDifferenceForDoubleTapInMilimeters * dpmm);
 
-        public static float TimeBetweenTaps = 300f;
+        public static float TimeBetweenTaps = 1.5f;
         public static float TimeForValidTap = 0.7f;
     }
 }

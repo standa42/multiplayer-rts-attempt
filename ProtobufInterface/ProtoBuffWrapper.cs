@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using NetworkObjects;
+using NetworkObjects.Commands;
 using ProtoBuf;
 
 namespace NetworkingWrapper
@@ -17,6 +18,9 @@ namespace NetworkingWrapper
     [ProtoInclude(104, typeof(SerializationObjectWrapper<RandomSeedPacket>))]
     [ProtoInclude(105, typeof(SerializationObjectWrapper<ReadyPacket>))]
     [ProtoInclude(106, typeof(SerializationObjectWrapper<StartPacket>))]
+    [ProtoInclude(107, typeof(SerializationObjectWrapper<CommandsPacket>))]
+    [ProtoInclude(108, typeof(SerializationObjectWrapper<Command>))]
+    [ProtoInclude(109, typeof(SerializationObjectWrapper<List<Command>>))]
 
     public abstract class SerializationObjectWrapper
     {

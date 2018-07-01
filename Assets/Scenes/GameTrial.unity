@@ -210,6 +210,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
+        type: 2}
+      propertyPath: m_FontData.m_MinSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758173901233976, guid: e7e8cc38580fd3248abf418d8baf9350,
+        type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e7e8cc38580fd3248abf418d8baf9350, type: 2}
   m_IsPrefabParent: 0
@@ -253,8 +268,8 @@ Camera:
   m_GameObject: {fileID: 837960062}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -401,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc45050291a05a7458d83c7892037e1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchInput: {fileID: 1949006092}
 --- !u!1001 &1635772399
 Prefab:
   m_ObjectHideFlags: 0
@@ -506,6 +522,22 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a3e54f2309827b544bf2fff3770a03b1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1949006088 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1262245484147426, guid: a3e54f2309827b544bf2fff3770a03b1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1635772399}
+--- !u!114 &1949006092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1949006088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e6dab701e24864c8aadf2f3a5ee7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2076117384
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +564,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
