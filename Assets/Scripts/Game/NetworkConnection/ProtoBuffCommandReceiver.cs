@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
 using Assets.Scripts.Game.Entities;
-using Assets.Scripts.Game.Races;
 using NetworkingWrapper;
 using NetworkObjects;
 using NetworkObjects.Commands;

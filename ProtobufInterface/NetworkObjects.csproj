@@ -58,6 +58,7 @@
     <Compile Include="Packets\StartPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtoBuffWrapper.cs" />
+    <Compile Include="ResourceType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

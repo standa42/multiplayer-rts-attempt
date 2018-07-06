@@ -1,9 +1,9 @@
-﻿#define IS_ANDROID
+﻿//#define IS_ANDROID
 
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
-using Assets.Scripts.Game.Races;
+using Assets.Scripts.Game;
 using Assets.Scripts.Menu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,7 +37,7 @@ public class MenuControl : MonoBehaviour
     // Game input variables to be passed to game scene
 
     private NumberOfPlayersInGame numberOfPlayersInGame;
-    private RaceEnum raceEnum;
+    private Assets.Scripts.Game.RaceEnum raceEnum;
 
 
     // Signing in variable
@@ -58,7 +58,7 @@ public class MenuControl : MonoBehaviour
 
     public void SecondRaceClick()
     {
-        ChooseRaceButtons(SecondRaceButton,RaceEnum.Second);
+        ChooseRaceButtons(SecondRaceButton,RaceEnum.Universal);
     }
 
     public void FourPlayersClick()

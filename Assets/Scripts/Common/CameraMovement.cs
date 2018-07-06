@@ -29,7 +29,7 @@ namespace Assets.Scripts.Common
 
         private void ResetCameraPosition()
         {
-            camera.transform.position = new Vector3(8, 0, -8.5f);
+            camera.transform.position = new Vector3(8, 0, -8f);
             camera.transform.rotation = Quaternion.Euler(-25, 0, 0);
         }
 

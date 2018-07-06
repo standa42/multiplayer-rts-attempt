@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
+using Assets.Scripts.Game.Entities;
 using Assets.Scripts.Menu;
 using UnityEngine;
 using Random = System.Random;
+using Tree = Assets.Scripts.Game.Entities.Tree;
 
 namespace Assets.Scripts.Game
 {
@@ -42,7 +44,7 @@ namespace Assets.Scripts.Game
             }
         }
 
-        public static Map LoadMapFromFile(string name, NumberOfPlayersInGame numberOfPlayers)
+        public static Map LoadMapFromFile(string name, NumberOfPlayersInGame numberOfPlayers, GameManager gameManager, List<RaceEnum> playerRaces)
         {
             // Loading
             TextAsset mapFile = Resources.Load(@"Map/Maps/" + name) as TextAsset;
@@ -54,10 +56,14 @@ namespace Assets.Scripts.Game
             int y = int.Parse(stream.ReadLine().Split(' ')[1]);
             stream.ReadLine();
 
-            var mapSize = new MapSize(x,y);
+            var mapSize = new MapSize(x, y);
 
             stream.ReadLine();
             stream.ReadLine();
+
+            var map = PrepareMap(mapSize);
+
+            int playerId = 0;
 
             for (int _x = 0; _x < x; _x++)
             {
@@ -66,19 +72,53 @@ namespace Assets.Scripts.Game
                     string[] tokens = stream.ReadLine().Split(' ');
                     int tokenX = int.Parse(tokens[0]);
                     int tokenY = int.Parse(tokens[1]);
-                    FieldAction tokenType = (FieldAction) int.Parse(tokens[2]);
-                    /*
-                    map.typeGrid[tokenX, tokenY] = FieldAction.Clear;
+                    FieldAction tokenType = (FieldAction)int.Parse(tokens[2]);
 
-                    if (tokenType != FieldAction.Clear)
+                    switch (tokenType)
                     {
-                        PlaceEntityOnPosition(tokenType, tokenX, tokenY);
+                        case FieldAction.TreeSpawn:
+                            var treeSpawn = new TreeSpawn(-1,new Vector2Int(tokenX,tokenY),map,gameManager);
+                            gameManager.TreeSpawns.Add(treeSpawn);
+                            break;
+                        case FieldAction.Tree:
+                            var tree = new Tree(-1, new Vector2Int(tokenX, tokenY), map, gameManager);
+                            map.AddEntityToPosition(tokenX, tokenY, tree);
+                            gameManager.NaturalEntities.Add(tree);
+                            break;
+                        case FieldAction.Resources:
+                            var resource = new Resource(-1, new Vector2Int(tokenX, tokenY), map, gameManager);
+                            map.AddEntityToPosition(tokenX, tokenY, resource);
+                            gameManager.NaturalEntities.Add(resource);
+                            break;
+                        case FieldAction.Obstacle:
+                            var obstacle = new Obstacle(-1, new Vector2Int(tokenX, tokenY), map, gameManager);
+                            map.AddEntityToPosition(tokenX, tokenY, obstacle);
+                            gameManager.NaturalEntities.Add(obstacle);
+                            break;
+                        case FieldAction.Player:
+                            for (int plX = tokenX; plX < tokenX+3; plX++)
+                            {
+                                for (int plY = tokenY; plY < tokenY+3; plY++)
+                                {
+                                    PlayerWorker unit;
+                                    if (playerRaces[playerId] == RaceEnum.Universal)
+                                    {
+                                        unit = new PlayerCubeWorker(playerId, new Vector2Int(plX, plY), map, gameManager);
+                                    }
+                                    else
+                                    {
+                                        unit = new PlayerSphereWorker(playerId, new Vector2Int(plX, plY), map, gameManager);
+                                    }
+                                    map.AddEntityToPosition(plX, plY, unit);
+                                    gameManager.PlayerWorkers.Add(unit);
+                                }
+                            }
+
+                            playerId++;
+                            break;
                     }
-                    */
                 }
             }
-
-            var map = PrepareMap(mapSize);
 
             return map;
         }
@@ -105,21 +145,36 @@ namespace Assets.Scripts.Game
         }
 
 
-        public class Map
-        {
-            public MapSize Size { get; }
-            private GameObject ground;
-            private GameObject gridMesh;
 
-            public Map(MapSize size, GameObject ground, GameObject gridMesh)
-            {
-                this.Size = size;
-                this.ground = ground;
-                this.gridMesh = gridMesh;
-            }
-        }
     }
 
+
+    public class Map
+    {
+        public MapSize Size { get; }
+        private GameObject ground;
+        private GameObject gridMesh;
+
+        public Entity[][] Entities;
+
+        public Map(MapSize size, GameObject ground, GameObject gridMesh)
+        {
+            this.Size = size;
+            this.ground = ground;
+            this.gridMesh = gridMesh;
+
+            Entities = new Entity[size.X][];
+            for (int i = 0; i < size.X; i++)
+            {
+                Entities[i] = new Entity[size.Y];
+            }
+        }
+
+        public void AddEntityToPosition(int x, int y, Entity entity)
+        {
+            Entities[x][y] = entity;
+        }
+    }
 
     public struct MapSize
     {
@@ -143,5 +198,5 @@ namespace Assets.Scripts.Game
         Player = 240,
         None = 1
     }
-    
+
 }

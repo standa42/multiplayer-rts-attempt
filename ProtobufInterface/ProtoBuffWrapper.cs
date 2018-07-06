@@ -21,6 +21,11 @@ namespace NetworkingWrapper
     [ProtoInclude(107, typeof(SerializationObjectWrapper<CommandsPacket>))]
     [ProtoInclude(108, typeof(SerializationObjectWrapper<Command>))]
     [ProtoInclude(109, typeof(SerializationObjectWrapper<List<Command>>))]
+    [ProtoInclude(110, typeof(SerializationObjectWrapper<BuildCommand>))]
+    [ProtoInclude(111, typeof(SerializationObjectWrapper<AttackCommand>))]
+    [ProtoInclude(112, typeof(SerializationObjectWrapper<MineCommand>))]
+    [ProtoInclude(113, typeof(SerializationObjectWrapper<MoveCommand>))]
+    [ProtoInclude(114, typeof(SerializationObjectWrapper<CreateUnitCommand>))]
 
     public abstract class SerializationObjectWrapper
     {

@@ -178,6 +178,7 @@ public class TouchInput : MonoBehaviour
     private void Tap(Vector2 position)
     {
         Log.LogMessage("Tap: " + position);
+        TapEvent?.Invoke(position);
     }
 
     /// <summary>
@@ -188,6 +189,7 @@ public class TouchInput : MonoBehaviour
     private void Drag(Vector2 begin, Vector2 current)
     {
         Log.LogMessage("Drag: " + begin + " " + current);
+        DragEvent?.Invoke(begin, current);
     }
 
     /// <summary>
@@ -198,6 +200,7 @@ public class TouchInput : MonoBehaviour
     private void DragEnd(Vector2 begin, Vector2 end)
     {
         Log.LogMessage("Drag end: " + begin + " " + end);
+        DragEndEvent?.Invoke(begin, end);
     }
 
     /// <summary>
@@ -207,7 +210,7 @@ public class TouchInput : MonoBehaviour
     private void Slide(Vector2 differenceVector)
     {
         Log.LogMessage("Slide: " + differenceVector);
-        SlideEvent(differenceVector);
+        SlideEvent?.Invoke(differenceVector);
     }
 
 }

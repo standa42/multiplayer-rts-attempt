@@ -1,4 +1,4 @@
-﻿#define IS_ANDROID
+﻿//#define IS_ANDROID
 
 using System;
 using System.Collections;
@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
 using Assets.Scripts.Game.Managers;
-using Assets.Scripts.Game.Races;
 using Assets.Scripts.Menu;
 using Assets.Scripts.Game.NetworkConnection;
+using Assets.Scripts.Game.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Initialization
@@ -18,6 +18,7 @@ namespace Assets.Scripts.Game.Initialization
     public class Initializer : MonoBehaviour
     {
         public TouchInput touchInput;
+        public ResourceDisplay resourceDisplay;
 
         public delegate void NetworkCreationVariablesDelegate(List<Tuple<int, byte>> playerRaces, int mapId, int randomSeed);
         public delegate void NetworkStartGameDelegate();
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Game.Initialization
         private int myId;
         private int mapId;
         private int randomSeed;
-        private List<Tuple<int, byte>> playerRaces;
+        private List<RaceEnum> playerRaces = new List<RaceEnum>();
 
         void Start()
         {
@@ -51,7 +52,9 @@ namespace Assets.Scripts.Game.Initialization
 
             this.mapId = 0;
             this.randomSeed = 42;
-            this.playerRaces = new List<Tuple<int, byte>>() { new Tuple<int, byte>(0, 0) };
+            this.playerRaces = new List<RaceEnum>();
+            playerRaces.Add(RaceEnum.Universal);
+            playerRaces.Add(RaceEnum.Second);
 
             SceneCreationEditor();
         }
@@ -107,7 +110,11 @@ namespace Assets.Scripts.Game.Initialization
         {
             this.mapId = mapId;
             this.randomSeed = randomSeed;
-            this.playerRaces = playerRaces;
+            var sortPlayerRaces = playerRaces.OrderBy(x => x.Item1);
+            foreach (var playerRace in playerRaces)
+            {
+                this.playerRaces.Add((RaceEnum)playerRace.Item2);
+            }
 
             Log.LogMessage($"Network creation complete map:{mapId} seed: {randomSeed} races: {playerRaces}");
 
@@ -150,41 +157,56 @@ namespace Assets.Scripts.Game.Initialization
         {
             Log.LogMessage("Scene creation start");
             CommonRandom.RandomGenerator = new System.Random(randomSeed);
-            MapFactory.Map map;
+
+            ResourcesManager resourcesManager = new ResourcesManager(myId, IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            resourcesManager.ResourcesUpdate += resourceDisplay.ActualAmount;
+            resourcesManager.AddWoodToPlayer(myId, 0);
+
+            var gameManager = new GameManager(myId, IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var game = new Game(gameManager);
+
+            Map map;
             if (IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame == NumberOfPlayersInGame.Two)
             {
-                map = MapFactory.LoadMapFromFile("TestingTwo1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+                map = MapFactory.LoadMapFromFile("TestingTwo1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame, gameManager, playerRaces);
             }
             else
             {
-                map = MapFactory.LoadMapFromFile("TestingFour1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+                map = MapFactory.LoadMapFromFile("TestingFour1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame, gameManager, playerRaces);
             }
             var cameraMovement = new CameraControl(touchInput);
 
             var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
             var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
                 IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
-            var inputAutomata = new InputCommandAutomata(playerProxies);
-            var game = new Game();
+            var inputAutomata = new InputCommandAutomata(playerProxies, map, touchInput);
+
             this.simulation = new Simulation(commandsHolder, inputAutomata, game);
 
             simulation.Run();
             Log.LogMessage("Scene creation end");
-            
+
         }
 
         private void SceneCreationEditor()
         {
             Log.LogMessage("Scene creation start");
             CommonRandom.RandomGenerator = new System.Random(randomSeed);
-            var map = MapFactory.LoadMapFromFile("TestingTwo1", NumberOfPlayersInGame.Two);
+
+            ResourcesManager resourcesManager = new ResourcesManager(myId, IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            resourcesManager.ResourcesUpdate += resourceDisplay.ActualAmount;
+            resourcesManager.AddWoodToPlayer(myId, 0);
+
+            var gameManager = new GameManager(myId, IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
+            var game = new Game(gameManager);
+
+            var map = MapFactory.LoadMapFromFile("TestingTwo1", NumberOfPlayersInGame.Two, gameManager, playerRaces);
             var cameraMovement = new CameraControl(touchInput);
 
             var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
             var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
                 IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
-            var inputAutomata = new InputCommandAutomataMock(playerProxies);
-            var game = new Game();
+            var inputAutomata = new InputCommandAutomataMock(playerProxies, map, touchInput);
             this.simulation = new Simulation(commandsHolder, inputAutomata, game);
 
             simulation.Run();
@@ -202,7 +224,7 @@ namespace Assets.Scripts.Game.Initialization
                 //Log.LogMessage($"SimException: {e.Message} {Environment.NewLine} {e.StackTrace}");
                 throw;
             }
-            
+
         }
 
 
