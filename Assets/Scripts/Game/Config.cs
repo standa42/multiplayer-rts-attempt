@@ -14,7 +14,7 @@ namespace Assets.Scripts.Game
 
     public enum RaceEnum : byte
     {
-        Universal,
-        Second
+        Cubes,
+        Spheres
     }
 }

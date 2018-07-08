@@ -24,6 +24,7 @@ namespace Assets.Scripts.Game
             mapForFourPlayers = new List<string>();
 
             mapForTwoPlayers.Add("TestingTwo1");
+            mapForTwoPlayers.Add("PathfindingTest");
             mapForFourPlayers.Add("TestingFour1");
         }
 
@@ -101,7 +102,7 @@ namespace Assets.Scripts.Game
                                 for (int plY = tokenY; plY < tokenY+3; plY++)
                                 {
                                     PlayerWorker unit;
-                                    if (playerRaces[playerId] == RaceEnum.Universal)
+                                    if (playerRaces[playerId] == RaceEnum.Cubes)
                                     {
                                         unit = new PlayerCubeWorker(playerId, new Vector2Int(plX, plY), map, gameManager);
                                     }
@@ -197,6 +198,15 @@ namespace Assets.Scripts.Game
         Clear = 0,
         Player = 240,
         None = 1
+    }
+
+    public enum MoveDirection
+    {
+        Left,
+        Right,
+        Up,
+        Down,
+        None
     }
 
 }

@@ -19,6 +19,7 @@ namespace Assets.Scripts.Game.Initialization
     {
         public TouchInput touchInput;
         public ResourceDisplay resourceDisplay;
+        public FadeInScript FadeInScript;
 
         public delegate void NetworkCreationVariablesDelegate(List<Tuple<int, byte>> playerRaces, int mapId, int randomSeed);
         public delegate void NetworkStartGameDelegate();
@@ -53,10 +54,12 @@ namespace Assets.Scripts.Game.Initialization
             this.mapId = 0;
             this.randomSeed = 42;
             this.playerRaces = new List<RaceEnum>();
-            playerRaces.Add(RaceEnum.Universal);
-            playerRaces.Add(RaceEnum.Second);
+            playerRaces.Add(RaceEnum.Cubes);
+            playerRaces.Add(RaceEnum.Spheres);
 
             SceneCreationEditor();
+            FadeInScript.SetPlayerMaterial(myId);
+            FadeInScript.FadeIn();
         }
 
         private void StartInitilization()
@@ -71,6 +74,7 @@ namespace Assets.Scripts.Game.Initialization
         private void RoomIsPrepared(int myId)
         {
             Log.LogMessage("My is is: " + myId);
+            FadeInScript.SetPlayerMaterial(myId);
 
             this.myId = myId;
 
@@ -111,7 +115,7 @@ namespace Assets.Scripts.Game.Initialization
             this.mapId = mapId;
             this.randomSeed = randomSeed;
             var sortPlayerRaces = playerRaces.OrderBy(x => x.Item1);
-            foreach (var playerRace in playerRaces)
+            foreach (var playerRace in sortPlayerRaces)
             {
                 this.playerRaces.Add((RaceEnum)playerRace.Item2);
             }
@@ -144,7 +148,7 @@ namespace Assets.Scripts.Game.Initialization
             // todo fade in to the scene
             Log.LogMessage("Fading in the scene");
 
-
+            FadeInScript.FadeIn();
         }
 
 
@@ -168,7 +172,7 @@ namespace Assets.Scripts.Game.Initialization
             Map map;
             if (IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame == NumberOfPlayersInGame.Two)
             {
-                map = MapFactory.LoadMapFromFile("TestingTwo1", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame, gameManager, playerRaces);
+                map = MapFactory.LoadMapFromFile("Showtime", IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame, gameManager, playerRaces);
             }
             else
             {
@@ -179,7 +183,7 @@ namespace Assets.Scripts.Game.Initialization
             var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
             var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
                 IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
-            var inputAutomata = new InputCommandAutomata(playerProxies, map, touchInput);
+            var inputAutomata = new InputCommandAutomata(myId, playerProxies, map, touchInput, gameManager);
 
             this.simulation = new Simulation(commandsHolder, inputAutomata, game);
 
@@ -200,13 +204,13 @@ namespace Assets.Scripts.Game.Initialization
             var gameManager = new GameManager(myId, IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
             var game = new Game(gameManager);
 
-            var map = MapFactory.LoadMapFromFile("TestingTwo1", NumberOfPlayersInGame.Two, gameManager, playerRaces);
+            var map = MapFactory.LoadMapFromFile("Showtime", NumberOfPlayersInGame.Two, gameManager, playerRaces);
             var cameraMovement = new CameraControl(touchInput);
 
             var commandsHolder = new CommandsHolder(IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
             var playerProxies = new PlayerProxies.PlayerProxies(networkCommunication, commandsHolder, myId,
                 IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame);
-            var inputAutomata = new InputCommandAutomataMock(playerProxies, map, touchInput);
+            var inputAutomata = new InputCommandAutomataMock(myId, playerProxies, map, touchInput, gameManager);
             this.simulation = new Simulation(commandsHolder, inputAutomata, game);
 
             simulation.Run();

@@ -250,6 +250,7 @@
     <Compile Include="Assets\Scripts\Common\LogTextInitializer.cs" />
     <Compile Include="Assets\Scripts\Game\Commands\InputCommandAutomata.cs" />
     <Compile Include="Assets\Scripts\Game\Config.cs" />
+    <Compile Include="Assets\Scripts\Game\Controls\Pathfinder.cs" />
     <Compile Include="Assets\Scripts\Game\Controls\TouchConfig.cs" />
     <Compile Include="Assets\Scripts\Game\Controls\TouchInput.cs" />
     <Compile Include="Assets\Scripts\Game\Entities\Entity.cs" />
@@ -284,13 +285,16 @@
     <Compile Include="Assets\Scripts\Game\PlayerProxies\PlayerProxies.cs" />
     <Compile Include="Assets\Scripts\Game\PlayerProxies\PlayerProxy.cs" />
     <Compile Include="Assets\Scripts\Game\UI\BuildingCreationButtons.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\FadeInScript.cs" />
     <Compile Include="Assets\Scripts\Game\UI\ResourceDisplay.cs" />
     <Compile Include="Assets\Scripts\Game\UI\UnitCreationButtons.cs" />
     <Compile Include="Assets\Scripts\Menu\IntersceneData.cs" />
     <Compile Include="Assets\Scripts\Menu\MenuControl.cs" />
+    <None Include="Assets\Resources\Map\Maps\Showtime.txt" />
     <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
     <None Include="Assets\Resources\Map\Maps\TestingTwo1.txt" />
     <None Include="Assets\Resources\Map\Maps\TestingFour1.txt" />
+    <None Include="Assets\Resources\Map\Maps\PathfindingTest.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Unity/JUSTfirst/JUSTfirst/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

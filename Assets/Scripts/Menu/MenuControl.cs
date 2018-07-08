@@ -53,12 +53,12 @@ public class MenuControl : MonoBehaviour
 
     public void UniversalRaceClick()
     {
-        ChooseRaceButtons(UniversalRaceButton, RaceEnum.Universal);
+        ChooseRaceButtons(UniversalRaceButton, RaceEnum.Cubes);
     }
 
     public void SecondRaceClick()
     {
-        ChooseRaceButtons(SecondRaceButton,RaceEnum.Universal);
+        ChooseRaceButtons(SecondRaceButton,RaceEnum.Spheres);
     }
 
     public void FourPlayersClick()

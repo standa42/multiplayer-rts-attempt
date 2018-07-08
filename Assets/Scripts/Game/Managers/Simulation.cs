@@ -76,7 +76,7 @@ namespace Assets.Scripts.Game.Managers
                     commandsHolder.TryGetCommandsForRound(commandsRoundCounter, out commands)
                     )
                 {
-                    Log.LogMessage($"Command round: {commandsRoundCounter}");
+                    //Log.LogMessage($"Command round: {commandsRoundCounter}");
                     SetCommands(commands);
 
                     commandsUpdateWatch -= commandsUpdateTimestep;
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Game.Managers
 
         private void SetCommands(List<Command> commands)
         {
-            Log.LogMessage("Commands tick");
+            //Log.LogMessage("Commands tick");
             inputAutomata.SendMyCommandsToPlayers();
             game.ApplyCommands(commands);
         }

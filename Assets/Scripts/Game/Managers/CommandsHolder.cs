@@ -59,7 +59,7 @@ namespace Assets.Scripts.Game.Managers
                     {
                         if (player[commandRound].Count > 0)
                         {
-                            //commands.AddRange(player[commandRound]);
+                            commands.AddRange(player[commandRound]);
                         }
                     }
                     catch (Exception e)

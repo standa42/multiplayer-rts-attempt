@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common;
 using Assets.Scripts.Game.Entities;
 using Assets.Scripts.Game.Managers;
 using Assets.Scripts.Menu;
@@ -47,11 +48,14 @@ namespace Assets.Scripts.Game
 
         public void ApplyCommands(List<Command> commands)
         {
+            Log.LogMessage(commands.Count.ToString());
+
+
             foreach (var command in commands)
             {
                 var moveCommand = (MoveCommand) command;
 
-                PlayerWorkers.Where(x => x.EntityId == moveCommand.EntityId).First().MoveCmd(new Vector2(moveCommand.X,moveCommand.Y));
+                PlayerWorkers.Where(x => x.EntityId == moveCommand.EntityId).First().MoveCmd(new Vector2Int(moveCommand.X,moveCommand.Y));
             }
         }
 
