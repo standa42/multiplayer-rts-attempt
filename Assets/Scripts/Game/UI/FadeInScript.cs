@@ -13,6 +13,8 @@ namespace Assets.Scripts.Game.UI
 {
     public class FadeInScript : MonoBehaviour
     {
+        // UI elements
+
         public Image MainCoverageImage;
         public Image PlayerColorImage;
         public Text ChangingText;
@@ -20,13 +22,14 @@ namespace Assets.Scripts.Game.UI
 
         private IEnumerator textChangingCoroutine;
         private Random rnd = new Random();
+        /// <summary>
+        /// Texts displayed to user during loading of the game
+        /// </summary>
         private List<string> texts = new List<string>()
         {
-            "initializing game",
             "harvesting Hawking radiation",
             "fighting Skynet",
             "establishing quantum network",
-            "determining determinizer",
             "collecting human attention",
             "generating map generator",
             "solving Rubik's cube",
@@ -36,27 +39,40 @@ namespace Assets.Scripts.Game.UI
             "playing golf",
             "watching Netflix",
             "surfing internet",
-            "watching kittens"
+            "watching kitten videos"
         };
 
         void Start()
         {
-            ChangingText.text = texts[0];
+            ChangingText.text = "Initializing game";
             textChangingCoroutine = ChangeText();
             StartCoroutine(textChangingCoroutine);
         }
 
+        /// <summary>
+        /// Shows player color using image with given material
+        /// </summary>
+        /// <param name="playerId"></param>
         public void SetPlayerMaterial(int playerId)
         {
             PlayerColorImage.material = PlayerMaterials.GetPlayerMaterialByPlayerId(playerId);
         }
 
+        /// <summary>
+        /// Starts fading in to the game
+        /// </summary>
         public void FadeIn()
         {
             StopCoroutine(textChangingCoroutine);
             StartCoroutine(FadeTo(0.0f, 3.5f));
         }
 
+        /// <summary>
+        /// Alpha fade of image
+        /// </summary>
+        /// <param name="aValue"></param>
+        /// <param name="aTime"></param>
+        /// <returns></returns>
         IEnumerator FadeTo(float aValue, float aTime)
         {
             float alpha = MainCoverageImage.color.a;
@@ -72,6 +88,10 @@ namespace Assets.Scripts.Game.UI
             Destroy(MainCoverageImage);
         }
 
+        /// <summary>
+        /// Changes text displayed to user while loading
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ChangeText()
         {
             while (true)

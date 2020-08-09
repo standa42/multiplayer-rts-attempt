@@ -11,6 +11,9 @@ using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.PlayerProxies
 {
+    /// <summary>
+    /// Handles command forwarding from input automata and multiplayer network
+    /// </summary>
     public class PlayerProxies
     {
         private LocalPlayerProxy localPlayer;

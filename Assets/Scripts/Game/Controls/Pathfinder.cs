@@ -11,17 +11,35 @@ namespace Assets.Scripts.Game.Controls
 {
     public static class Pathfinder
     {
+        /// <summary>
+        /// Pathfinding algorithm
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="myPosition">where is entity standing</param>
+        /// <param name="destinationPosition">where is entity going</param>
+        /// <returns>Direction recoomended for entity movement</returns>
         public static MoveDirection FindPath(Map map, Vector2Int myPosition, Vector2Int destinationPosition)
         {
-            return Dijkstra(map, myPosition, destinationPosition);
+            return CustomPathfinder(map, myPosition, destinationPosition);
         }
+
+
+
+        // Variables used in main pathfinding alg and helper functions
 
         private static Map currentMap;
         private static int[][] DistanceGrid;
         private static int[][] DestinationGrid;
         private static Queue<Vector2Int> q;
 
-        private static MoveDirection Dijkstra(Map map, Vector2Int myPosition, Vector2Int destinationPosition)
+        /// <summary>
+        /// Custom pathfinding algorithm described in program documentation
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="myPosition"></param>
+        /// <param name="destinationPosition"></param>
+        /// <returns>Direction recoomended for entity movement</returns>
+        private static MoveDirection CustomPathfinder(Map map, Vector2Int myPosition, Vector2Int destinationPosition)
         {
             q = new Queue<Vector2Int>();
             currentMap = map;
@@ -210,11 +228,25 @@ namespace Assets.Scripts.Game.Controls
             }
         }
 
+        /// <summary>
+        /// Returns manhattan distance between two points on the map
+        /// </summary>
+        /// <param name="sx"></param>
+        /// <param name="sy"></param>
+        /// <param name="ex"></param>
+        /// <param name="ey"></param>
+        /// <returns></returns>
         private static int ManhattanDistance(int sx, int sy, int ex, int ey)
         {
             return Math.Abs(sx - ex) + Math.Abs(sy - ey);
         }
 
+        /// <summary>
+        /// Returns true if given position lies in map
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private static bool ValidPositionOnMap(int x, int y)
         {
             if (x >= 0 && x < currentMap.Size.X && y >= 0 && y < currentMap.Size.Y)
@@ -225,6 +257,11 @@ namespace Assets.Scripts.Game.Controls
             return false;
         }
 
+        /// <summary>
+        /// Returns true if given position lies in map
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         private static bool ValidPositionOnMap(Vector2Int v)
         {
             return ValidPositionOnMap(v.x, v.y);

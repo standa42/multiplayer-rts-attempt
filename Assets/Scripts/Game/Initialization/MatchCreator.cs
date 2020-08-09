@@ -7,6 +7,9 @@ using Assets.Scripts.Game.NetworkConnection;
 
 namespace Assets.Scripts.Game.Initialization
 {
+    /// <summary>
+    /// Creates match and returns device player network game id
+    /// </summary>
     public class MatchCreator
     {
         private NetworkCommunication networkCommunication;

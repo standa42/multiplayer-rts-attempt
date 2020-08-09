@@ -11,6 +11,10 @@ using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.NetworkConnection
 {
+    /// <summary>
+    /// Handles receiving and distributing Packets from network
+    /// devides them into special events for every existing type of packet
+    /// </summary>
     public class ProtoBuffCommandReceiver
     {
         public event RaceReceivedDelegate RaceReceived;

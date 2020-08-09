@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Entities
 {
+    /// <summary>
+    /// Most abstract ancestor of all entities in game
+    /// inharitance tree is described in documentation
+    /// </summary>
     public abstract class Entity
     {
         public int EntityId { get; }

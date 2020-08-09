@@ -28,6 +28,11 @@ namespace Assets.Scripts.Game.Entities
             selection.SetActive(false);
         }
 
+        /// <summary>
+        /// Moves unit based on recommendation of map pathfinding algorithm
+        /// moves unit only after certain amount of simulation steps
+        /// if unit cant move, wait certain amount of simulation steps before setting to non-moving state
+        /// </summary>
         public virtual void Move()
         {
             if (moving)
@@ -83,6 +88,10 @@ namespace Assets.Scripts.Game.Entities
             }
         }
 
+        /// <summary>
+        /// Processes move command sent from user
+        /// </summary>
+        /// <param name="position">position to move to</param>
         public virtual void MoveCmd(Vector2Int position)
         {
             destination = position;
@@ -91,6 +100,9 @@ namespace Assets.Scripts.Game.Entities
             moving = true;
         }
 
+        /// <summary>
+        /// Moves entity gameobjects to entity current position
+        /// </summary>
         public virtual void MoveGOToCurrentLocation()
         {
             WaitToStopMovingCounter = 0;
@@ -100,11 +112,17 @@ namespace Assets.Scripts.Game.Entities
             selection.transform.position = new Vector3(Position.x + 0.5f, Position.y + 0.5f, -0.37f);
         }
 
+        /// <summary>
+        /// Activates gameobject signalizing selection of unit
+        /// </summary>
         public virtual void Select()
         {
             selection.SetActive(true);
         }
 
+        /// <summary>
+        /// Deactivates gameobject signalizing selection of unit
+        /// </summary>
         public virtual void Unselect()
         {
             selection.SetActive(false);

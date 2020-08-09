@@ -12,6 +12,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game
 {
+    /// <summary>
+    /// Holds game entities and performs simulation and command application on them
+    /// </summary>
     public class GameManager
     {
         public ResourcesManager ResourcesManager { get; }

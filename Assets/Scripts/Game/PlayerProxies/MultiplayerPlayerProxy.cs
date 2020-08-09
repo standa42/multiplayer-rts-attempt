@@ -9,6 +9,9 @@ using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.PlayerProxies
 {
+    /// <summary>
+    /// Handles forwarding of commands from multiplayer network
+    /// </summary>
     public class MultiplayerPlayerProxy : PlayerProxy
     {
         private NetworkCommunication networkCommunication;

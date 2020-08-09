@@ -16,6 +16,10 @@ namespace Assets.Scripts.Game.NetworkConnection
         void Run(int myId);
     }
 
+    /// <summary>
+    /// Chooses mapId and random seed and spreads them to non-autoritative players
+    /// also sends device player race and receives other players races
+    /// </summary>
     public class AutoritativeNetworkCreator : INetworkCreator
     {
         public event Initializer.NetworkCreationVariablesDelegate CreationVariablesAvailable;
@@ -82,6 +86,10 @@ namespace Assets.Scripts.Game.NetworkConnection
         }
     }
 
+    /// <summary>
+    /// Receives mapId and random seed from autoritative player
+    /// also sends device player race and receives other players races
+    /// </summary>
     public class NonAutoritativeNetworkCreator : INetworkCreator
     {
         public event Initializer.NetworkCreationVariablesDelegate CreationVariablesAvailable;

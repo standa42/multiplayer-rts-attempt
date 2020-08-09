@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
+    /// <summary>
+    /// Important constants describing properties of touch controlling
+    /// </summary>
     public static class TouchConfig
     {
         private static readonly double inchInMilimeters = 25.4f;

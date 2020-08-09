@@ -14,6 +14,9 @@ namespace Assets.Scripts.Game.Entities
         {
         }
 
+        /// <summary>
+        /// With certain probability - creates tree on given location
+        /// </summary>
         public void GrowTree()
         {
             if (Map.Entities[Position.x][Position.y] == null)

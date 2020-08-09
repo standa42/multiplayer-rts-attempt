@@ -1,4 +1,4 @@
-﻿//#define IS_ANDROID
+﻿#define IS_ANDROID
 
 using System;
 using System.Collections;
@@ -17,17 +17,25 @@ namespace Assets.Scripts.Game.Initialization
 {
     public class Initializer : MonoBehaviour
     {
+        // Gameobject scripts binded in scene
+
         public TouchInput touchInput;
         public ResourceDisplay resourceDisplay;
         public FadeInScript FadeInScript;
 
+        // Callback delegates used in network creation
+
         public delegate void NetworkCreationVariablesDelegate(List<Tuple<int, byte>> playerRaces, int mapId, int randomSeed);
         public delegate void NetworkStartGameDelegate();
+
+        // Object for network creation/communication
 
         private NetworkCommunication networkCommunication;
         private MatchCreator matchCreator;
         private INetworkCreator networkCreator;
         private INetworkStarter networkStarter;
+
+        // Variables gathered from network
 
         private int myId;
         private int mapId;
@@ -47,6 +55,10 @@ namespace Assets.Scripts.Game.Initialization
 #endif
         }
 
+
+        /// <summary>
+        /// Mocks network initialization for editor
+        /// </summary>
         private void EditorInitialization()
         {
             myId = 0;
@@ -62,6 +74,10 @@ namespace Assets.Scripts.Game.Initialization
             FadeInScript.FadeIn();
         }
 
+        /// <summary>
+        /// Creates match creator and network communication
+        /// and sets callback for the time when room is safely created and this can continue
+        /// </summary>
         private void StartInitilization()
         {
             networkCommunication = new NetworkCommunication(((uint)IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame) - 1);
@@ -71,37 +87,52 @@ namespace Assets.Scripts.Game.Initialization
             matchCreator.CreateMatch();
         }
 
+        /// <summary>
+        /// Action made based on succesfull room creation
+        /// </summary>
+        /// <param name="myId">network and game id of device player</param>
         private void RoomIsPrepared(int myId)
         {
             Log.LogMessage("My is is: " + myId);
+            Log.LogMessage("FadeInScript: setting material");
             FadeInScript.SetPlayerMaterial(myId);
+            Log.LogMessage("Material set");
 
             this.myId = myId;
 
             if (myId == 0)
             {
-                // Autoritative player
+                // if Autoritative player
                 networkCreator = new AutoritativeNetworkCreator(networkCommunication);
                 networkStarter = new AutoritativeNetworkStarter(networkCommunication);
             }
             else
             {
-                // Non-Autoritative player
+                // if Non-Autoritative player
                 networkCreator = new NonAutoritativeNetworkCreator(networkCommunication);
                 networkStarter = new NonAutoritativeNetworkStarter(networkCommunication);
             }
 
             // TODO: possible race condition, if sb sends packet before
             // sb else bind receive events - he wont get em
-            StartCoroutine(DelayFunction(NetworkCreation, 1.5f));
+            StartCoroutine(DelayFunction(NetworkCreation, 2.5f));
         }
 
+        /// <summary>
+        /// Function for delaying given action
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
         IEnumerator DelayFunction(Action function, float seconds)
         {
             yield return new WaitForSeconds(seconds);
             function();
         }
 
+        /// <summary>
+        /// Creates network creation objects -> they exchange player races, mapId and random seed
+        /// </summary>
         private void NetworkCreation()
         {
             Log.LogMessage("Network creatin started");
@@ -110,6 +141,12 @@ namespace Assets.Scripts.Game.Initialization
             networkCreator.Run(myId);
         }
 
+        /// <summary>
+        /// Callback for the time when races, mapId and random seed agreed and synchronized by all players
+        /// </summary>
+        /// <param name="playerRaces"></param>
+        /// <param name="mapId"></param>
+        /// <param name="randomSeed"></param>
         private void NetworkCreationComplete(List<Tuple<int, byte>> playerRaces, int mapId, int randomSeed)
         {
             this.mapId = mapId;
@@ -125,17 +162,21 @@ namespace Assets.Scripts.Game.Initialization
             CreateScene();
         }
 
+        /// <summary>
+        /// Creates the whole game scene and than tries to start the game
+        /// </summary>
         private void CreateScene()
         {
             Log.LogMessage("Scene creation started");
-
-
+            
             SceneCreationAndroid();
-
-
+            
             AttempToStart();
         }
 
+        /// <summary>
+        /// Creates object that handles synchonization of game start
+        /// </summary>
         private void AttempToStart()
         {
             Log.LogMessage("Attemping to start network");
@@ -143,9 +184,11 @@ namespace Assets.Scripts.Game.Initialization
             networkStarter.Run(((int)IntersceneData.MenuChoicesInstance.NumberOfPlayersInGame) - 1);
         }
 
+        /// <summary>
+        /// Callback that starts fading in to the scene
+        /// </summary>
         private void FadeIn()
         {
-            // todo fade in to the scene
             Log.LogMessage("Fading in the scene");
 
             FadeInScript.FadeIn();
@@ -157,6 +200,9 @@ namespace Assets.Scripts.Game.Initialization
         private Simulation simulation = null;
         private bool debugMarker = false;
 
+        /// <summary>
+        /// Handles the whole scene creation process and object creation and dependencies on android platform
+        /// </summary>
         private void SceneCreationAndroid()
         {
             Log.LogMessage("Scene creation start");
@@ -192,6 +238,9 @@ namespace Assets.Scripts.Game.Initialization
 
         }
 
+        /// <summary>
+        /// Handles the whole scene creation process in editor
+        /// </summary>
         private void SceneCreationEditor()
         {
             Log.LogMessage("Scene creation start");

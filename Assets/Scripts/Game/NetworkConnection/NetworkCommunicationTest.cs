@@ -11,6 +11,12 @@ using System;
 using Assets.Scripts.Common;
 using UnityEngine.UI;
 
+/* Code inherited from another project
+ *
+ * tests sending of reliable and unreliable between two players in given interval
+ * supposed to be tested as the only GameObject in scene (+ log text)
+ */
+
 namespace Assets.Scripts
 {
     public class NetworkCommunicationTest : MonoBehaviour, RealTimeMultiplayerListener

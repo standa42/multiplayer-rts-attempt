@@ -8,6 +8,9 @@ using NetworkObjects;
 
 namespace Assets.Scripts.Game.NetworkConnection
 {
+    /// <summary>
+    /// Wraps packets to byte[]
+    /// </summary>
     public class ProtoBuffCommandSender
     {
         public byte[] WrapCommandMessages(List<Packet> packetList)

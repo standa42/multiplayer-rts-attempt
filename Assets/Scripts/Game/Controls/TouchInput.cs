@@ -6,8 +6,15 @@ using Assets.Scripts.Controls;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Implements state automata watching events happening on display
+/// and transforming them to tap, drag and slide event
+/// that can be observed and used by other objects 
+/// </summary>
 public class TouchInput : MonoBehaviour
 {
+    // Events that can be observed by others
+
     public event SlideDelegate SlideEvent;
     public event TapDelegate TapEvent;
     public event DragDelegate DragEvent;

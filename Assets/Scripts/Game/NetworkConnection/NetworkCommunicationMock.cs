@@ -8,6 +8,9 @@ using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.NetworkConnection
 {
+    /// <summary>
+    /// Mock of network communication for testing in editor
+    /// </summary>
     public class NetworkCommunicationMock : NetworkCommunication
     {
         public new event ProtoByteDelegate ReceivedMessage;

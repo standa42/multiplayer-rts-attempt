@@ -11,7 +11,7 @@ namespace Assets.Scripts.Game.Entities
     {
         public Tree(int playerId, Vector2Int position, Map map, GameManager gameManager) : base(playerId, position, map, gameManager)
         {
-            go = GameObject.Instantiate( Resources.Load(@"Map/Entities/TreeEntity") as GameObject);
+            go = GameObject.Instantiate( Resources.Load(@"Entities/treesPrefab2") as GameObject);
             go.transform.position = new Vector3(position.x + 0.5f, position.y + 0.5f, go.transform.position.z);
         }
     }

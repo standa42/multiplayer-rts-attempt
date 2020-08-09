@@ -10,6 +10,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Managers
 {
+    /// <summary>
+    /// Manages invocation and synchronization of simulation and command rounds
+    /// </summary>
     public class Simulation
     {
         // in seconds
@@ -25,8 +28,7 @@ namespace Assets.Scripts.Game.Managers
         private int simulationInControlCounter = 0;
 
         private int commandsRoundCounter = 0; 
-
-        // TODO not initialized
+        
         private Game game;
         private InputCommandAutomata inputAutomata;
         private CommandsHolder commandsHolder;

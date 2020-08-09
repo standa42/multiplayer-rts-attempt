@@ -1,4 +1,5 @@
 ﻿// From Internet https://gist.github.com/mdomrach/a66602ee85ce45f8860c36b2ad31ea14#file-gridmesh-cs
+// Generates rectangular grid on map
 
 using UnityEngine;
 using System.Collections.Generic;

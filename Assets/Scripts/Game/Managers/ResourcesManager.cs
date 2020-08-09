@@ -8,8 +8,12 @@ using Assets.Scripts.Menu;
 
 namespace Assets.Scripts.Game
 {
+    /// <summary>
+    /// Manages resources amounts of for all players
+    /// </summary>
     public class ResourcesManager
     {
+        // event that device player resources are being changed
         public event ResourcesUpdateDelegate ResourcesUpdate;
         public delegate void ResourcesUpdateDelegate(int resourceAmount, int woodAmount);
 

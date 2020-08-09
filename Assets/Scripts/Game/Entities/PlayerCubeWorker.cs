@@ -9,8 +9,6 @@ namespace Assets.Scripts.Game.Entities
 {
     public class PlayerCubeWorker : PlayerWorker
     {
-        
-
         public PlayerCubeWorker(int playerId, Vector2Int position, Map map, GameManager gameManager) : base(playerId, position, map, gameManager)
         {
             go = GameObject.Instantiate(Resources.Load(@"Map/Entities/CubeWorker") as GameObject);

@@ -9,6 +9,9 @@ using NetworkObjects.Commands;
 
 namespace Assets.Scripts.Game.Managers
 {
+    /// <summary>
+    /// Holds commands for all players and all command rounds
+    /// </summary>
     public class CommandsHolder
     {
         public List<List<Command>>[] PlayerCommands;
@@ -28,11 +31,23 @@ namespace Assets.Scripts.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Add commands to next command round - relies on the fact, that communication over network is in order
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="commands"></param>
         public void AddCommandToPlayer(int playerId, List<Command> commands)
         {
             PlayerCommands[playerId].Add(commands);
         }
 
+        /// <summary>
+        /// Gives commands for given command round
+        /// returns false if commands are not available -> also commands are null
+        /// </summary>
+        /// <param name="commandRound"></param>
+        /// <param name="commands"></param>
+        /// <returns></returns>
         public bool TryGetCommandsForRound(int commandRound, out List<Command> commands)
         {
             commands = null;

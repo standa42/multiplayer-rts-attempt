@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Game.Managers
 {
+    /// <summary>
+    /// Holds player variables - resources, entitiesCount, etc..
+    /// </summary>
     public class PlayerStats
     {
         public int PlayerId { get; }

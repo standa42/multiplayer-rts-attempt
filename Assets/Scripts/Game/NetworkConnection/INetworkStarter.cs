@@ -14,6 +14,9 @@ namespace Assets.Scripts.Game.NetworkConnection
         void Run(int opponentCount);
     }
 
+    /// <summary>
+    /// Waits for ready packets from non-autoritative players and than sends start packet to them
+    /// </summary>
     public class AutoritativeNetworkStarter : INetworkStarter
     {
         public event Initializer.NetworkStartGameDelegate NetworkStartGame;
@@ -51,6 +54,9 @@ namespace Assets.Scripts.Game.NetworkConnection
         }
     }
 
+    /// <summary>
+    /// Sends ready packet and waits until start packet from autoritative player arrives
+    /// </summary>
     public class NonAutoritativeNetworkStarter : INetworkStarter
     {
         public event Initializer.NetworkStartGameDelegate NetworkStartGame;

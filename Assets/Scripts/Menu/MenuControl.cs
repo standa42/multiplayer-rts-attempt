@@ -1,4 +1,4 @@
-﻿//#define IS_ANDROID
+﻿#define IS_ANDROID
 
 using System.Collections;
 using System.Collections.Generic;
@@ -39,13 +39,12 @@ public class MenuControl : MonoBehaviour
     private NumberOfPlayersInGame numberOfPlayersInGame;
     private Assets.Scripts.Game.RaceEnum raceEnum;
 
-
     // Signing in variable
     private bool? signedInSuccesfully = null;
 
-
     void Start()
     {
+        // stop display from fading out
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
@@ -79,6 +78,9 @@ public class MenuControl : MonoBehaviour
         SceneManager.LoadScene("GameTrial");
     }
 
+    /// <summary>
+    /// Performs sign in procedure on android, if in editor - switches to number of players choice
+    /// </summary>
     public void PlayClick()
     {
 #if IS_ANDROID

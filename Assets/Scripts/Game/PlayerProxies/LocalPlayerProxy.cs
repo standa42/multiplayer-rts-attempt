@@ -10,6 +10,9 @@ using NetworkObjects;
 
 namespace Assets.Scripts.Game.PlayerProxies
 {
+    /// <summary>
+    /// Handles forwarding of commands form local(device) player
+    /// </summary>
     public class LocalPlayerProxy : PlayerProxy
     {
         private NetworkCommunication networkCommunication;

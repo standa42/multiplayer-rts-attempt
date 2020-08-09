@@ -35,7 +35,5 @@ namespace Assets.Scripts.Menu
         Two = 2,
         Four = 4
     }
-
     
-
 }

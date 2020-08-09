@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Common
 {
+    /// <summary>
+    /// Log for important things in gives scene
+    /// Text field should be binded to it at the beggining of the scene (performed by LogTextInitializer in scene on certain Text object)
+    /// </summary>
     public static class Log
     {
         private static Text _logTextInstance;
@@ -37,6 +41,10 @@ namespace Assets.Scripts.Common
             messageList = new Queue<string>();
         }
 
+        /// <summary>
+        /// Adds message to log queue
+        /// </summary>
+        /// <param name="message"></param>
         public static void LogMessage(string message)
         {
             messageList.Enqueue(message);
@@ -49,6 +57,9 @@ namespace Assets.Scripts.Common
             UpdateText();
         }
 
+        /// <summary>
+        /// Updates log messages in text field
+        /// </summary>
         private static void UpdateText()
         {
             if (LogTextInstance != null)
